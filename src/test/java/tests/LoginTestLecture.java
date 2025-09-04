@@ -60,7 +60,7 @@ public class LoginTestLecture extends BaseTest {
     public void checkLoginWithEmptyLogin(){
         loginPage.open();
         loginPage.login("", "secret_sauce");
-        assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is require",
+        assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required",
                 "Сообщение об ошибке не соответствует");
     }
 
