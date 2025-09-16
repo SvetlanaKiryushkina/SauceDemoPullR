@@ -31,6 +31,8 @@ public class BaseTest {
     ProductStep productStep;
     CartStep cartStep;
     CheckoutPage checkoutPage;
+    String user = System.getProperty("user");
+    String password = System.getProperty("password");
 
     @Parameters({"browser"})//связующее звено между тестами и тестовым набором с параметром браузер для
     //кросбраузерного тестирования

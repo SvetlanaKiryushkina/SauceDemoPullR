@@ -18,7 +18,7 @@ public class LoginTest extends BaseTest {
     @Lead("Тимофей")
     public void checkPositiveLogin() {
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
         assertEquals(productPage.getTitle(),
                 "Products",
                 "Сообщение об ошибке не соответствует");
@@ -27,7 +27,7 @@ public class LoginTest extends BaseTest {
     @Test(enabled = false)
     public void checkLoginWithEmptyPassword() {
         loginPage.open();
-        loginPage.login("standard_user", "");
+        loginPage.login(user, "");
         assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Password is required",
                 "Сообщение об ошибке не соответствует");

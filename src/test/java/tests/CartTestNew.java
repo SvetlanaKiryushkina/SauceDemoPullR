@@ -52,7 +52,7 @@ public class CartTestNew extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Lead("Тимофей")
     public void checkClickRemove() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         productStep.addProductToCart("Sauce Labs Backpack");
         productStep.addProductToCart("Sauce Labs Bike Light");
         productPage.clickToCart();

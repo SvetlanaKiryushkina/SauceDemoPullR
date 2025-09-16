@@ -1,15 +1,21 @@
-name: SauceDemo1 CI
+name: SauceDemo CI
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  schedule:
+    - cron: "0 10 * * 5"
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    env:
+      USER: ${{secrets.SD_USER}}
+      PASSWORD: ${{secrets.SD_PASSWORD}}
 
     steps:
     - name: Checkout
@@ -21,7 +27,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Run test
-      run: mvn clean test
+      run: mvn clean test -Duser=$USER -Dpassword=$PASSWORD
     - name: Get Allure history
       uses: actions/checkout@v2
       if: always()
