@@ -31,8 +31,8 @@ public class BaseTest {
     ProductStep productStep;
     CartStep cartStep;
     CheckoutPage checkoutPage;
-    String user = System.getProperty("user");
-    String password = System.getProperty("password");
+    String user = System.getProperty("user",PropertyReader.getProperty("user"));
+    String password = System.getProperty("password",PropertyReader.getProperty("password"));
 
     @Parameters({"browser"})//связующее звено между тестами и тестовым набором с параметром браузер для
     //кросбраузерного тестирования
@@ -57,7 +57,7 @@ public class BaseTest {
             driver.manage().window().maximize();
         } else if (browser.equalsIgnoreCase("edgeDriver")) {
             EdgeOptions options = new EdgeOptions();
-            //options.addArguments("--headless");
+            options.addArguments("--headless");
             driver = new EdgeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.manage().window().maximize();
@@ -72,7 +72,7 @@ public class BaseTest {
         checkoutPage = new CheckoutPage(driver);
     }
 
-    /*@AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult result) {
         if (ITestResult.FAILURE == result.getStatus()) {
             AllureUtils.takeScreenshot(driver);
@@ -81,6 +81,4 @@ public class BaseTest {
             }
         }
     }
-
-     */
 }

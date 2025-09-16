@@ -25,7 +25,7 @@ public class LoginTestLecture extends BaseTest {
     @Issue("SD_01/1")//Ссылка на багрепорт
     public void checkPositiveLogin() {
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
         assertEquals(productPage.getTitle(),
                 "Products",
                 "Сообщение об ошибке не соответствует");
@@ -35,7 +35,7 @@ public class LoginTestLecture extends BaseTest {
     // затем изменить на true или лучше вообще стереть
     public void checkLoginWithEmptyPassword(){
         loginPage.open();
-        loginPage.login("standard_user", "");
+        loginPage.login(user, "");
         assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Password is required",
                 "Сообщение об ошибке не соответствует");//когда пишем ассерты, всегда указываем сообщение
@@ -59,7 +59,7 @@ public class LoginTestLecture extends BaseTest {
      */
     public void checkLoginWithEmptyLogin(){
         loginPage.open();
-        loginPage.login("", "secret_sauce");
+        loginPage.login("", password);
         assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required",
                 "Сообщение об ошибке не соответствует");
     }

@@ -18,7 +18,7 @@ public class CartTestNew extends BaseTest {
     @Lead("Тимофей")
     public void checkCart() {
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
         productPage.addToCart("Sauce Labs Backpack");
         productPage.clickToCart();
         CartPage cartPage = new CartPage(driver);
@@ -36,7 +36,7 @@ public class CartTestNew extends BaseTest {
     @Lead("Тимофей")
     public void checkClickCheckout() {
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
         productPage.addToCart("Sauce Labs Backpack");
         productPage.clickToCart();
         cartPage.clickCheckout();
@@ -63,7 +63,7 @@ public class CartTestNew extends BaseTest {
     @Test(testName = "Проверка перехода на страницу оформления заказа")
     @Description("Проверка перехода на страницу оформления заказа")
     public void checkCheckoutPageFromCart() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         productStep.addProductToCart("Sauce Labs Backpack");
         cartPage.open()
                 .isPageOpened();

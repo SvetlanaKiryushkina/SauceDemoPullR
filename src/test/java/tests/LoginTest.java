@@ -24,7 +24,7 @@ public class LoginTest extends BaseTest {
                 "Сообщение об ошибке не соответствует");
     }
 
-    @Test(enabled = false)
+    @Test()
     public void checkLoginWithEmptyPassword() {
         loginPage.open();
         loginPage.login(user, "");
@@ -43,9 +43,9 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithEmptyLogin() {
         loginPage.open();
         loginPage.login("", "test");
-        //assertEquals(loginPage.getErrorMessage(),
-                //"Epic sadface: Password is required",
-                //"Сообщение об ошибке не соответствует");
+        assertEquals(loginPage.getErrorMessage(),
+                "Epic sadface: Username is required",
+                "Сообщение об ошибке не соответствует");
     }
 
     @DataProvider(name = "Проверка логина с негативными данными")
