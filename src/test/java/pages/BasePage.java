@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class BasePage {
+public abstract class BasePage {
 
     public final String BASE_URL = "https://www.saucedemo.com/";
     WebDriver driver;
@@ -30,7 +30,6 @@ public class BasePage {
         JavascriptExecutor js = (JavascriptExecutor) driver;//обьявили джава executor
         js.executeScript("argument[0].click();", element);
     }
-    //можно еще закинуть скроллинг
 
     //выполняет команду, которая позволяет понять что страница прогружена(дожидается полной загрузки страницы)
     public void waitForPageLoaded() {
@@ -46,4 +45,6 @@ public class BasePage {
     public void waitElement(By locator) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+
+    public abstract BasePage isPageOpened();
 }

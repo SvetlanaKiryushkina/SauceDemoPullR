@@ -1,5 +1,6 @@
 package tests;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -11,16 +12,17 @@ import static tests.AllureUtils.takeScreenshot;
 
 //стандартный класс, в котором описано, что тест стартанул, что прошел успешно и т.д
 //привязывается ко всем тестам в BaseTest
+@Slf4j
 public class TestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        System.out.printf("======================================== STARTING TEST %s ========================================%n", iTestResult.getName());
+        log.info("======================================== STARTING TEST {} ========================================%n", iTestResult.getName());
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        System.out.printf("======================================== FINISHED TEST %s Duration: %ss ========================================%n", iTestResult.getName(),
+        log.info("======================================== FINISHED TEST {} Duration: {} ========================================%n", iTestResult.getName(),
                 getExecutionTime(iTestResult));
         //WebDriver driver = (WebDriver) iTestResult.getTestContext().getAttribute("driver");
         //takeScreenshot(driver);//добавили, что бы сделать скриншот при падении теста
@@ -28,13 +30,13 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        System.out.printf("======================================== FAILED TEST %s Duration: %ss ========================================%n", iTestResult.getName(),
+        log.warn("======================================== FAILED TEST %s Duration: {} ========================================%n", iTestResult.getName(),
                 getExecutionTime(iTestResult));
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        System.out.printf("======================================== SKIPPING TEST %s ========================================%n", iTestResult.getName());
+        log.info("======================================== SKIPPING TEST {} ========================================%n", iTestResult.getName());
     }
 
     @Override

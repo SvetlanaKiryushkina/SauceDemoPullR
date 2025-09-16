@@ -8,7 +8,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Random;
 
-public class CartTest extends BaseTest {
+public class CartTestLecture extends BaseTest {
 
     @Test
     public void checkCart() {

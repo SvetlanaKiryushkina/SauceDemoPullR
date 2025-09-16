@@ -10,8 +10,12 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.CartPage;
+import pages.CheckoutPage;
 import pages.LoginPage;
 import pages.ProductPage;
+import steps.CartStep;
+import steps.LoginStep;
+import steps.ProductStep;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -23,6 +27,10 @@ public class BaseTest {
     ProductPage productPage;
     CartPage cartPage;
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    LoginStep loginStep;
+    ProductStep productStep;
+    CartStep cartStep;
+    CheckoutPage checkoutPage;
 
     @Parameters({"browser"})//связующее звено между тестами и тестовым набором с параметром браузер для
     //кросбраузерного тестирования
@@ -38,7 +46,7 @@ public class BaseTest {
             options.setExperimentalOption("prefs", chromePrefs);
             options.addArguments("--disable-popup-blocking");
             options.addArguments("--disable-infobars");
-            options.addArguments("--headless");
+            //options.addArguments("--headless");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-gpu");
@@ -47,7 +55,7 @@ public class BaseTest {
             driver.manage().window().maximize();
         } else if (browser.equalsIgnoreCase("edgeDriver")) {
             EdgeOptions options = new EdgeOptions();
-            options.addArguments("--headless");
+            //options.addArguments("--headless");
             driver = new EdgeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.manage().window().maximize();
@@ -56,9 +64,13 @@ public class BaseTest {
         loginPage = new LoginPage(driver);
         productPage = new ProductPage(driver);
         cartPage = new CartPage(driver);
+        loginStep = new LoginStep(driver);
+        productStep = new ProductStep(driver);
+        cartStep = new CartStep(driver);
+        checkoutPage = new CheckoutPage(driver);
     }
 
-    @AfterMethod(alwaysRun = true)
+    /*@AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult result) {
         if (ITestResult.FAILURE == result.getStatus()) {
             AllureUtils.takeScreenshot(driver);
@@ -67,4 +79,6 @@ public class BaseTest {
             }
         }
     }
+
+     */
 }

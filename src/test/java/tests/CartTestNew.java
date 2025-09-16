@@ -2,10 +2,11 @@ package tests;
 
 import io.qameta.allure.*;
 import jdk.jfr.Description;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.CheckoutPage;
+
+import static org.testng.Assert.assertEquals;
 
 public class CartTestNew extends BaseTest {
 
@@ -22,7 +23,7 @@ public class CartTestNew extends BaseTest {
         productPage.clickToCart();
         CartPage cartPage = new CartPage(driver);
         String productName = cartPage.getProductNameFromCart(0);
-        Assert.assertEquals(productName,
+        assertEquals(productName,
                 "Sauce Labs Backpack",
                 "Товар отсутствует в корзине");
     }
@@ -40,7 +41,7 @@ public class CartTestNew extends BaseTest {
         productPage.clickToCart();
         cartPage.clickCheckout();
         CheckoutPage checkoutPage = new CheckoutPage(driver);
-        Assert.assertEquals(checkoutPage.getPageTitle(), "Checkout: Your Information",
+        assertEquals(checkoutPage.getPageTitle(), "Checkout: Your Information",
                 "Пользователь не перешёл на страницу Checkout");
     }
 
@@ -51,11 +52,21 @@ public class CartTestNew extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Lead("Тимофей")
     public void checkClickRemove() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productPage.addToCart("Sauce Labs Backpack");
-        productPage.addToCart("Sauce Labs Bike Light");
+        loginStep.auth("standard_user", "secret_sauce");
+        productStep.addProductToCart("Sauce Labs Backpack");
+        productStep.addProductToCart("Sauce Labs Bike Light");
         productPage.clickToCart();
-        Assert.assertEquals(cartPage.getItemsCount(), 2, "Количество не соответствует");
+        cartPage.isPageOpened();
+        assertEquals(cartPage.getItemsCount(), 2, "Количество не соответствует");
+    }
+
+    @Test(testName = "Проверка перехода на страницу оформления заказа")
+    @Description("Проверка перехода на страницу оформления заказа")
+    public void checkCheckoutPageFromCart() {
+        loginStep.auth("standard_user", "secret_sauce");
+        productStep.addProductToCart("Sauce Labs Backpack");
+        cartPage.open()
+                .isPageOpened();
+        cartStep.clickCheckButton();
     }
 }

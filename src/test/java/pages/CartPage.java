@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +22,27 @@ public class CartPage extends BasePage {
         super(driver);
     }
 
-    public void open() {//переход на страницу корзины
+    public CartPage open() {//переход на страницу корзины
         driver.get(BASE_URL + "cart.html");
+        return this;
     }
 
     @Step("Нажатие на кнопку Continue Shopping")
-    public void clickContinue() {//нажать на кнопку "Вернуться к товарам"
+    public ProductPage clickContinue() {//нажать на кнопку "Вернуться к товарам"
         driver.findElement(BUTTON_CONTINUE).click();
+        return new ProductPage(driver);
     }
 
     @Step("Нажатие на кнопку Checkout")
-    public void clickCheckout() {
+    public CheckoutPage clickCheckout() {
         driver.findElement(BUTTON_CHECKOUT).click();
+        return new CheckoutPage(driver);
     }
 
     @Step("Удалить товар из корзины, нажав на кнопку Remove")
-    public void clickRemove(String productName) {//кликнуть на кнопку remove
+    public CartPage clickRemove(String productName) {//кликнуть на кнопку remove
         driver.findElement(BUTTON_REMOVE).click();
+        return this;
     }
 
     //Первый метод проверки наличия товара в корзине
@@ -66,5 +71,12 @@ public class CartPage extends BasePage {
     @Step("Получить количество товаров в корзине")
     public int getItemsCount() {
         return driver.findElements(PRODUCT_ITEMS).size();
+    }
+
+    @Override
+    public CartPage isPageOpened(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(BUTTON_CHECKOUT));//явное ожидание, т.е после перехода
+        //на страницу, ожидаем пока загрузится кнопка логин
+        return this;
     }
 }
